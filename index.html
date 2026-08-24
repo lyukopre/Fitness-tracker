@@ -1,42 +1,1067 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Fitness Tracker</title>
-<style>
-:root{color-scheme:light;--bg:#eef2ff;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--primary:#4f46e5;--success:#16a34a;--danger:#dc2626;--input:#fff;--soft:#f8faff}:root.dark{color-scheme:dark;--bg:#0b1220;--card:#111827;--text:#f8fafc;--muted:#a7b0c0;--line:#263247;--primary:#818cf8;--success:#22c55e;--danger:#f87171;--input:#0f172a;--soft:#172033}*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;background:linear-gradient(145deg,var(--bg),#dbeafe);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100%;padding-bottom:env(safe-area-inset-bottom)}.dark body{background:linear-gradient(145deg,#080d18,#111827)}.container{max-width:860px;margin:auto;padding:12px}.header,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px #00000012}.header{text-align:center;padding:22px 16px;margin-bottom:12px;position:relative}.header h1{margin:0 0 6px;color:var(--primary);font-size:clamp(25px,7vw,38px)}.header p{margin:0;color:var(--muted)}.nav-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 12px;scrollbar-width:none}.nav-tabs::-webkit-scrollbar{display:none}.nav-tab{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:12px 15px;font-weight:700;font-size:15px}.nav-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}.card{padding:18px;margin-bottom:14px}.card h2{margin:0 0 16px;color:var(--primary);font-size:24px;border-bottom:1px solid var(--line);padding-bottom:10px}.hidden{display:none!important}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-head h2{margin:0;border:0;padding:0}.icon-btn{min-height:42px;border:1px solid var(--line);background:var(--soft);color:var(--text);border-radius:11px;padding:9px 12px;font-weight:800}.theme-toggle{position:absolute;right:14px;top:14px;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:50%;font-size:20px}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;border-radius:14px;padding:16px;text-align:center}.stat-value{font-size:25px;font-weight:800}.stat-label{font-size:13px;opacity:.9}.form-group{margin:0 0 14px}.form-group label{display:block;margin:0 0 6px;font-weight:700;color:var(--muted)}input,select,textarea{width:100%;min-height:48px;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:var(--input);color:var(--text);font:inherit;font-size:16px}textarea{min-height:90px;resize:vertical}button{font:inherit;cursor:pointer}.btn{width:100%;min-height:48px;border:0;border-radius:12px;padding:12px 16px;margin:5px 0;background:var(--success);color:#fff;font-weight:800}.btn-secondary{background:var(--primary)}.btn-danger{background:var(--danger)}.btn-outline{background:var(--soft);border:1px solid var(--line);color:var(--text)}.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:8px}.workout-day,.meal-plan,.tracking-entry{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:12px;padding:14px;margin:10px 0}.workout-day h3,.meal-plan h3{margin:0 0 8px;color:var(--primary)}.workout-exercise{background:var(--input);border:1px solid var(--line);border-radius:10px;padding:11px;margin:8px 0}.workout-exercise h4{margin:0 0 8px}.workout-details{display:flex;flex-wrap:wrap;gap:6px}.workout-detail,.meal-food{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:13px}.meal-foods{display:flex;flex-wrap:wrap;gap:6px}.tracking-date{color:var(--primary);font-weight:800;margin-bottom:4px}.modal{position:fixed;inset:0;z-index:1000;background:#0008;display:flex;align-items:flex-start;justify-content:center;padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));overflow:hidden}.modal-content{width:min(720px,100%);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;overflow:hidden}.modal-header{flex:0 0 auto;padding:20px 18px 12px;border-bottom:1px solid var(--line)}.modal-header h2{margin:0;color:var(--primary)}.modal-body{min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 18px}.modal-footer{flex:0 0 auto;padding:10px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--card)}body.modal-open{overflow:hidden;position:fixed;width:100%}.delete-line{float:right;background:transparent;border:0;color:var(--danger);font-size:20px}.mini-note{font-size:13px;color:var(--muted);margin:0 0 14px}@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}.modal{align-items:center}.modal-content{max-height:90dvh}.modal-footer{display:flex;gap:10px}.modal-footer .btn{flex:1}}
-</style>
+  <!-- =========================================================
+       METADATI E CONFIGURAZIONE MOBILE
+       ========================================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Fitness Tracker</title>
+
+  <style>
+    /* =========================================================
+       1. VARIABILI TEMA
+       ========================================================= */
+    :root {
+      color-scheme: light;
+      --bg: #eef2ff;
+      --surface: #ffffff;
+      --surface-2: #f8faff;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #dbe3f0;
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --shadow: 0 8px 24px rgba(15, 23, 42, .10);
+    }
+
+    :root.dark {
+      color-scheme: dark;
+      --bg: #080d18;
+      --surface: #111827;
+      --surface-2: #182235;
+      --text: #f8fafc;
+      --muted: #a7b0c0;
+      --border: #2b3850;
+      --primary: #818cf8;
+      --primary-light: #a5b4fc;
+      --success: #22c55e;
+      --danger: #f87171;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .28);
+    }
+
+    /* =========================================================
+       2. RESET E STILI BASE
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--primary-light);
+      outline-offset: 2px;
+    }
+
+    /* =========================================================
+       3. LAYOUT PRINCIPALE OTTIMIZZATO PER IPHONE
+       ========================================================= */
+    .app {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: calc(12px + env(safe-area-inset-top)) 12px 24px;
+    }
+
+    .header,
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .header {
+      position: relative;
+      padding: 24px 18px 20px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      color: var(--primary-light);
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: 1.12;
+      letter-spacing: -.8px;
+    }
+
+    .header p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: clamp(15px, 4vw, 20px);
+      line-height: 1.35;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 20px;
+    }
+
+    /* =========================================================
+       4. NAVIGAZIONE ORIZZONTALE MOBILE
+       ========================================================= */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 14px;
+      padding: 1px 1px 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab {
+      flex: 0 0 auto;
+      min-height: 46px;
+      padding: 11px 15px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .nav-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* =========================================================
+       5. SCHEDE E CONTENUTI
+       ========================================================= */
+    .card {
+      margin-bottom: 14px;
+      padding: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2,
+    .card > h2 {
+      margin: 0;
+      color: var(--primary-light);
+      font-size: clamp(22px, 6vw, 30px);
+      line-height: 1.15;
+    }
+
+    .card > h2 {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .icon-btn,
+    .btn {
+      min-height: 46px;
+      border-radius: 12px;
+      font-weight: 800;
+    }
+
+    .icon-btn {
+      flex: 0 0 auto;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat-card {
+      min-width: 0;
+      padding: 16px 10px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #818cf8, #7c3aed);
+      color: #fff;
+      text-align: center;
+    }
+
+    .stat-value {
+      overflow-wrap: anywhere;
+      font-size: clamp(22px, 7vw, 34px);
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.2;
+      opacity: .94;
+    }
+
+    .workout-day,
+    .meal-plan,
+    .tracking-entry {
+      margin: 10px 0;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary-light);
+      border-radius: 14px;
+      background: var(--surface-2);
+    }
+
+    .workout-day h3,
+    .meal-plan h3 {
+      margin: 0 0 8px;
+      color: var(--primary-light);
+      font-size: 20px;
+    }
+
+    .workout-exercise {
+      margin: 8px 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .workout-exercise h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .workout-details,
+    .meal-foods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .workout-detail,
+    .meal-food {
+      display: inline-block;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-2);
+      font-size: 13px;
+    }
+
+    .mini-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       6. FORM E PULSANTI
+       ========================================================= */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .btn {
+      width: 100%;
+      margin: 5px 0;
+      padding: 12px 16px;
+      border: 0;
+      color: #fff;
+    }
+
+    .btn-success {
+      background: var(--success);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* =========================================================
+       7. MODALE OTTIMIZZATA PER SAFARI IOS
+       ========================================================= */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+      overflow: hidden;
+      background: rgba(0, 0, 0, .68);
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      width: min(700px, 100%);
+      max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .modal-header {
+      flex: 0 0 auto;
+      padding: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: var(--primary-light);
+      font-size: 24px;
+    }
+
+    .modal-body {
+      min-height: 0;
+      padding: 14px 18px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .modal-footer {
+      flex: 0 0 auto;
+      padding: 10px 18px calc(10px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    body.modal-open {
+      position: fixed;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .delete-line {
+      float: right;
+      border: 0;
+      background: transparent;
+      color: var(--danger);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =========================================================
+       8. ADATTAMENTI A SCHERMI MOLTO STRETTI
+       ========================================================= */
+    @media (max-width: 380px) {
+      .app {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .header {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .card {
+        padding: 13px;
+      }
+
+      .section-head {
+        align-items: flex-start;
+      }
+
+      .section-head h2 {
+        max-width: 58%;
+      }
+
+      .icon-btn {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 13px;
+      }
+    }
+
+    @media (min-width: 600px) {
+      .app {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .modal {
+        align-items: center;
+      }
+
+      .modal-content {
+        max-height: 90dvh;
+      }
+
+      .modal-footer {
+        display: flex;
+        gap: 10px;
+      }
+
+      .modal-footer .btn {
+        flex: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<header class="header"><button id="themeToggle" class="theme-toggle" aria-label="Cambia tema">🌙</button><h1>🏋️ Fitness Tracker</h1><p>Il tuo piano dieta e allenamento personale</p></header>
-<nav class="nav-tabs"><button class="nav-tab active" data-tab="dashboard">Dashboard</button><button class="nav-tab" data-tab="profile">Profilo</button><button class="nav-tab" data-tab="workouts">Allenamenti</button><button class="nav-tab" data-tab="nutrition">Dieta</button><button class="nav-tab" data-tab="tracking">Tracking</button><button class="nav-tab" data-tab="backup">Backup</button></nav>
-<section id="dashboard" class="tab-content"><div class="card"><div class="section-head"><h2>📊 Dati personali</h2><button class="icon-btn" id="editDashboard">✏️ Modifica</button></div><div class="stats-grid"><div class="stat-card"><div id="stat-name" class="stat-value">—</div><div class="stat-label">Nome</div></div><div class="stat-card"><div id="stat-weight" class="stat-value">—</div><div class="stat-label">Peso attuale</div></div><div class="stat-card"><div id="stat-bmi" class="stat-value">—</div><div class="stat-label">BMI</div></div><div class="stat-card"><div id="stat-target" class="stat-value">—</div><div class="stat-label">Target</div></div></div></div><div class="card"><div class="section-head"><h2>📅 Piano settimanale</h2><button class="icon-btn" id="editWeeklyPlan">✏️ Modifica</button></div><div id="weekly-plan-display"></div></div></section>
-<section id="profile" class="tab-content hidden"><div class="card"><h2>👤 Profilo e obiettivi</h2><div id="profile-form"></div><button class="btn" id="saveProfile">💾 Salva profilo</button></div></section>
-<section id="workouts" class="tab-content hidden"><div class="card"><div class="section-head"><h2>💪 Allenamenti</h2><button class="icon-btn" id="editWorkouts">✏️ Modifica</button></div><div id="workouts-display"></div></div></section>
-<section id="nutrition" class="tab-content hidden"><div class="card"><div class="section-head"><h2>🥗 Dieta</h2><button class="icon-btn" id="editNutrition">✏️ Modifica</button></div><div class="stats-grid"><div class="stat-card"><div id="stat-calories" class="stat-value">—</div><div class="stat-label">Kcal/giorno</div></div><div class="stat-card"><div id="stat-protein" class="stat-value">—</div><div class="stat-label">Proteine</div></div><div class="stat-card"><div id="stat-carbs" class="stat-value">—</div><div class="stat-label">Carboidrati</div></div><div class="stat-card"><div id="stat-fat" class="stat-value">—</div><div class="stat-label">Grassi</div></div></div><div id="meals-display"></div></div></section>
-<section id="tracking" class="tab-content hidden"><div class="card"><h2>📈 Tracking</h2><div class="form-group"><label>Data</label><input id="tracking-date" type="date"></div><div class="form-group"><label>Peso (kg)</label><input id="tracking-weight" type="number" step="0.1"></div><div class="form-group"><label>Girovita (cm)</label><input id="tracking-waist" type="number" step="0.5"></div><button class="btn" id="addTracking">➕ Aggiungi misurazione</button><h3>Storico</h3><div id="tracking-history"></div></div></section>
-<section id="backup" class="tab-content hidden"><div class="card"><h2>💾 Backup</h2><div class="btn-group"><button class="btn" id="exportJSON">📄 Esporta JSON</button><button class="btn btn-secondary" id="exportCSV">📊 Esporta CSV Excel</button></div><div class="form-group" style="margin-top:14px"><label class="btn btn-secondary" for="import-file">📁 Importa JSON/CSV</label><input id="import-file" type="file" accept=".json,.csv" hidden></div><button class="btn btn-danger" id="clearData">⚠️ Cancella dati</button></div></section>
-</div>
-<div id="editor-modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-content"><div class="modal-header"><h2 id="modal-title">Modifica</h2></div><div id="modal-body" class="modal-body"></div><div class="modal-footer"><button class="btn" id="modal-save">💾 Salva modifiche</button><button class="btn btn-danger" id="modal-close">✕ Annulla</button></div></div></div>
-<script>
-const defaultData={profile:{name:'Luca',weight_kg:80,height_cm:183,target_weight_kg:75,age:'',sex:'',activity_level:'moderate',goal:'Dimagrimento e rinforzo muscolare',notes:''},weekly_plan:{monday:{type:'Forza',workout:'A',cardio_min:0},tuesday:{type:'Cardio',workout:'',cardio_min:35},wednesday:{type:'Forza',workout:'B',cardio_min:0},thursday:{type:'Riposo attivo',workout:'',cardio_min:30},friday:{type:'Forza',workout:'A',cardio_min:0},saturday:{type:'Circuito leggero',workout:'C',cardio_min:20},sunday:{type:'Riposo',workout:'',cardio_min:0}},workouts:{A:[{name:'Squat con manubri',sets:3,reps:'8-12',rest:75},{name:'Rematore con manubri',sets:3,reps:'8-12',rest:75},{name:'Chest press da terra',sets:3,reps:'8-12',rest:75}],B:[{name:'Affondi in avanti',sets:3,reps:'8-12',rest:75},{name:'Floor press',sets:3,reps:'8-12',rest:75},{name:'Hip thrust',sets:3,reps:'8-12',rest:75}],C:[{name:'Squat corpo libero',sets:3,reps:'30-40 sec',rest:30},{name:'Curl manubri',sets:3,reps:'30-40 sec',rest:30}]},nutrition:{daily_calories:2000,protein_g:140,carbs_g:200,fat_g:65,notes:'Bevi 2–2,5 litri di acqua al giorno.',meals:[{name:'Colazione',foods:['yogurt greco','avena','frutta']},{name:'Pranzo',foods:['riso/patate','pollo/tonno','verdure']},{name:'Spuntino',foods:['frutto','yogurt/uova']},{name:'Cena',foods:['pesce/carne/legumi','verdure']}]},tracking:{weigh_ins:[],waist_measurements:[]}};
-let data=JSON.parse(localStorage.getItem('fitnessTrackerData')||'null')||structuredClone(defaultData);if(data.user_profile){data.profile={...defaultData.profile,...data.user_profile};delete data.user_profile}data.profile={...defaultData.profile,...(data.profile||{})};data.weekly_plan=data.weekly_plan||structuredClone(defaultData.weekly_plan);data.workouts=data.workouts||structuredClone(defaultData.workouts);data.nutrition={...defaultData.nutrition,...(data.nutrition||{})};data.nutrition.meals=data.nutrition.meals||structuredClone(defaultData.nutrition.meals);data.tracking=data.tracking||{weigh_ins:[],waist_measurements:[]};
-const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let modalSave=()=>{};function save(){localStorage.setItem('fitnessTrackerData',JSON.stringify(data))}function openModal(title,html,onSave){$('modal-title').textContent=title;$('modal-body').innerHTML=html;modalSave=onSave;$('editor-modal').classList.remove('hidden');document.body.classList.add('modal-open')}function closeModal(){$('editor-modal').classList.add('hidden');document.body.classList.remove('modal-open')}
-function profileFields(prefix='p'){let p=data.profile;return `<div class="form-group"><label>Nome</label><input id="${prefix}-name" value="${esc(p.name)}"></div><div class="form-group"><label>Peso (kg)</label><input id="${prefix}-weight" type="number" step="0.1" value="${p.weight_kg}"></div><div class="form-group"><label>Altezza (cm)</label><input id="${prefix}-height" type="number" value="${p.height_cm}"></div><div class="form-group"><label>Peso target (kg)</label><input id="${prefix}-target" type="number" step="0.1" value="${p.target_weight_kg}"></div><div class="form-group"><label>Età</label><input id="${prefix}-age" type="number" value="${p.age}"></div><div class="form-group"><label>Sesso</label><select id="${prefix}-sex"><option value="">Non specificato</option><option value="Maschio" ${p.sex==='Maschio'?'selected':''}>Maschio</option><option value="Femmina" ${p.sex==='Femmina'?'selected':''}>Femmina</option><option value="Altro" ${p.sex==='Altro'?'selected':''}>Altro</option></select></div><div class="form-group"><label>Livello attività</label><select id="${prefix}-activity"><option value="sedentary" ${p.activity_level==='sedentary'?'selected':''}>Sedentario</option><option value="light" ${p.activity_level==='light'?'selected':''}>Leggero</option><option value="moderate" ${p.activity_level==='moderate'?'selected':''}>Moderato</option><option value="active" ${p.activity_level==='active'?'selected':''}>Attivo</option><option value="very-active" ${p.activity_level==='very-active'?'selected':''}>Molto attivo</option></select></div><div class="form-group"><label>Obiettivo</label><input id="${prefix}-goal" value="${esc(p.goal)}"></div><div class="form-group"><label>Note personali</label><textarea id="${prefix}-notes">${esc(p.notes)}</textarea></div>`}function readProfile(prefix='p'){data.profile={name:$(prefix+'-name').value.trim(),weight_kg:+$(prefix+'-weight').value,height_cm:+$(prefix+'-height').value,target_weight_kg:+$(prefix+'-target').value,age:$(prefix+'-age').value,sex:$(prefix+'-sex').value,activity_level:$(prefix+'-activity').value,goal:$(prefix+'-goal').value,notes:$(prefix+'-notes').value}}
-function render(){let p=data.profile,bmi=p.height_cm?(p.weight_kg/(p.height_cm/100)**2).toFixed(1):'—';$('stat-name').textContent=p.name||'—';$('stat-weight').textContent=p.weight_kg+' kg';$('stat-bmi').textContent=bmi;$('stat-target').textContent=p.target_weight_kg+' kg';let days={monday:'Lunedì',tuesday:'Martedì',wednesday:'Mercoledì',thursday:'Giovedì',friday:'Venerdì',saturday:'Sabato',sunday:'Domenica'};$('weekly-plan-display').innerHTML=Object.entries(data.weekly_plan).map(([d,x])=>`<div class="workout-day"><h3>${days[d]}</h3><div>Tipo: <b>${esc(x.type)}</b></div>${x.workout?`<div>Scheda: <b>${esc(x.workout)}</b></div>`:''}${x.cardio_min?`<div>Cardio: <b>${x.cardio_min} min</b></div>`:''}</div>`).join('');$('workouts-display').innerHTML=Object.entries(data.workouts).map(([id,arr])=>`<div class="workout-day"><h3>Scheda ${esc(id)}</h3>${arr.map(x=>`<div class="workout-exercise"><h4>${esc(x.name)}</h4><div class="workout-details"><span class="workout-detail">Serie: ${x.sets}</span><span class="workout-detail">Ripetizioni: ${esc(x.reps)}</span><span class="workout-detail">Recupero: ${x.rest}s</span></div></div>`).join('')}</div>`).join('');let n=data.nutrition;$('stat-calories').textContent=n.daily_calories;$('stat-protein').textContent=n.protein_g+'g';$('stat-carbs').textContent=n.carbs_g+'g';$('stat-fat').textContent=n.fat_g+'g';$('meals-display').innerHTML=(n.notes?`<p class="mini-note">${esc(n.notes)}</p>`:'')+n.meals.map(m=>`<div class="meal-plan"><h3>${esc(m.name)}</h3><div class="meal-foods">${m.foods.map(f=>`<span class="meal-food">${esc(f)}</span>`).join('')}</div></div>`).join('');let ws=[...data.tracking.weigh_ins].sort((a,b)=>b.date.localeCompare(a.date));$('tracking-history').innerHTML=ws.length?ws.map(x=>{let w=data.tracking.waist_measurements.find(y=>y.date===x.date);return `<div class="tracking-entry"><div class="tracking-date">${new Date(x.date+'T12:00:00').toLocaleDateString('it-IT')}</div><div>Peso: <b>${x.weight} kg</b></div>${w?`<div>Girovita: <b>${w.waist} cm</b></div>`:''}</div>`}).join(''):'<p class="mini-note">Nessuna misurazione.</p>';$('profile-form').innerHTML=profileFields('profile')}
-function editPlan(){let days={monday:'Lunedì',tuesday:'Martedì',wednesday:'Mercoledì',thursday:'Giovedì',friday:'Venerdì',saturday:'Sabato',sunday:'Domenica'};let h='<p class="mini-note">Puoi cambiare liberamente tipo di giornata, scheda e minuti di cardio.</p>';for(let d in data.weekly_plan){let x=data.weekly_plan[d];h+=`<div class="workout-day"><h3>${days[d]}</h3><div class="form-group"><label>Tipo di allenamento</label><input data-day="${d}" data-field="type" value="${esc(x.type)}" placeholder="es. Forza, Cardio, Riposo"></div><div class="form-group"><label>Scheda / attività</label><input data-day="${d}" data-field="workout" value="${esc(x.workout)}" placeholder="es. A, Corsa, Yoga"></div><div class="form-group"><label>Cardio (minuti)</label><input type="number" data-day="${d}" data-field="cardio_min" value="${x.cardio_min||0}"></div></div>`}openModal('Modifica piano settimanale',h,()=>{document.querySelectorAll('#modal-body [data-day]').forEach(i=>{let x=data.weekly_plan[i.dataset.day];x[i.dataset.field]=i.dataset.field==='cardio_min'?+i.value:i.value});save();render()})}
-function editWorkouts(){let h='<p class="mini-note">Aggiungi, elimina o modifica schede ed esercizi. Le modifiche sono completamente libere.</p>';for(let id in data.workouts){h+=`<div class="workout-day"><button class="delete-line" data-delete-workout="${esc(id)}">×</button><div class="form-group"><label>Nome scheda</label><input data-workout-name="${esc(id)}" value="${esc(id)}"></div><div id="list-${esc(id)}">${data.workouts[id].map((x,i)=>exerciseEditor(id,i,x)).join('')}</div><button class="btn btn-outline" data-add-exercise="${esc(id)}">＋ Aggiungi esercizio</button></div>`}h+='<button class="btn btn-secondary" id="add-workout">＋ Aggiungi nuova scheda</button>';openModal('Modifica allenamenti',h,()=>{let next={};document.querySelectorAll('[data-workout-name]').forEach(i=>{let old=i.dataset.workoutName,nome=i.value.trim()||old;next[nome]=[];document.querySelectorAll(`[data-ex-workout="${CSS.escape(old)}"]`).forEach(row=>next[nome].push({name:row.querySelector('[data-k="name"]').value,sets:+row.querySelector('[data-k="sets"]').value,reps:row.querySelector('[data-k="reps"]').value,rest:+row.querySelector('[data-k="rest"]').value}))});data.workouts=next;save();render()});bindWorkoutEditor()}
-function exerciseEditor(id,i,x={name:'Nuovo esercizio',sets:3,reps:'8-12',rest:60}){return `<div class="workout-exercise" data-ex-workout="${esc(id)}"><button class="delete-line" data-delete-exercise>×</button><div class="form-group"><label>Esercizio</label><input data-k="name" value="${esc(x.name)}"></div><div class="form-group"><label>Serie</label><input data-k="sets" type="number" value="${x.sets}"></div><div class="form-group"><label>Ripetizioni/tempo</label><input data-k="reps" value="${esc(x.reps)}"></div><div class="form-group"><label>Recupero (sec)</label><input data-k="rest" type="number" value="${x.rest}"></div></div>`}function bindWorkoutEditor(){document.querySelectorAll('[data-delete-workout]').forEach(b=>b.onclick=()=>b.closest('.workout-day').remove());document.querySelectorAll('[data-delete-exercise]').forEach(b=>b.onclick=()=>b.closest('.workout-exercise').remove());document.querySelectorAll('[data-add-exercise]').forEach(b=>b.onclick=()=>{$('list-'+b.dataset.addExercise).insertAdjacentHTML('beforeend',exerciseEditor(b.dataset.addExercise,0))});$('add-workout').onclick=()=>{let id='Nuova scheda';let n=1;while($('list-'+id))id='Nuova scheda '+n++;$('add-workout').insertAdjacentHTML('beforebegin',`<div class="workout-day"><button class="delete-line" data-delete-workout="${esc(id)}">×</button><div class="form-group"><label>Nome scheda</label><input data-workout-name="${esc(id)}" value="${esc(id)}"></div><div id="list-${esc(id)}">${exerciseEditor(id,0)}</div><button class="btn btn-outline" data-add-exercise="${esc(id)}">＋ Aggiungi esercizio</button></div>`);bindWorkoutEditor()}}
-function editNutrition(){let n=data.nutrition;let h=`<div class="form-group"><label>Calorie giornaliere</label><input id="n-cal" type="number" value="${n.daily_calories}"></div><div class="form-group"><label>Proteine (g)</label><input id="n-pro" type="number" value="${n.protein_g}"></div><div class="form-group"><label>Carboidrati (g)</label><input id="n-carb" type="number" value="${n.carbs_g}"></div><div class="form-group"><label>Grassi (g)</label><input id="n-fat" type="number" value="${n.fat_g}"></div><div class="form-group"><label>Note dieta</label><textarea id="n-notes">${esc(n.notes||'')}</textarea></div><div id="meal-list">${n.meals.map(mealEditor).join('')}</div><button class="btn btn-secondary" id="add-meal">＋ Aggiungi pasto</button>`;openModal('Modifica dieta',h,()=>{data.nutrition.daily_calories=+$('n-cal').value;data.nutrition.protein_g=+$('n-pro').value;data.nutrition.carbs_g=+$('n-carb').value;data.nutrition.fat_g=+$('n-fat').value;data.nutrition.notes=$('n-notes').value;data.nutrition.meals=[...document.querySelectorAll('.meal-edit')].map(m=>({name:m.querySelector('[data-meal-name]').value,foods:m.querySelector('[data-meal-foods]').value.split(',').map(x=>x.trim()).filter(Boolean)}));save();render()});bindMealEditor()}
-function mealEditor(m={name:'Nuovo pasto',foods:[]}){return `<div class="meal-plan meal-edit"><button class="delete-line" data-delete-meal>×</button><div class="form-group"><label>Nome pasto</label><input data-meal-name value="${esc(m.name)}"></div><div class="form-group"><label>Alimenti separati da virgola</label><textarea data-meal-foods>${esc(m.foods.join(', '))}</textarea></div></div>`}function bindMealEditor(){document.querySelectorAll('[data-delete-meal]').forEach(b=>b.onclick=()=>b.closest('.meal-edit').remove());$('add-meal').onclick=()=>{$('meal-list').insertAdjacentHTML('beforeend',mealEditor());bindMealEditor()}}
-function download(n,c,t){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:t}));a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-function init(){let dark=localStorage.getItem('fitnessTheme')==='dark';document.documentElement.classList.toggle('dark',dark);$('themeToggle').textContent=dark?'☀️':'🌙';$('tracking-date').value=new Date().toISOString().slice(0,10);render()}
-document.querySelectorAll('.nav-tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab-content').forEach(x=>x.classList.add('hidden'));document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));$(b.dataset.tab).classList.remove('hidden');b.classList.add('active')});$('themeToggle').onclick=()=>{let d=document.documentElement.classList.toggle('dark');localStorage.setItem('fitnessTheme',d?'dark':'light');$('themeToggle').textContent=d?'☀️':'🌙'};$('saveProfile').onclick=()=>{readProfile('profile');save();render();alert('Profilo salvato.')};$('editDashboard').onclick=()=>openModal('Modifica dati personali',profileFields('dash'),()=>{readProfile('dash');save();render()});$('editWeeklyPlan').onclick=editPlan;$('editWorkouts').onclick=editWorkouts;$('editNutrition').onclick=editNutrition;$('modal-save').onclick=()=>{modalSave();closeModal();alert('Modifiche salvate.')};$('modal-close').onclick=closeModal;$('editor-modal').onclick=e=>{if(e.target===$('editor-modal'))closeModal()};$('addTracking').onclick=()=>{let date=$('tracking-date').value,w=+$('tracking-weight').value,wa=+$('tracking-waist').value;if(!date||!w)return alert('Inserisci data e peso.');data.tracking.weigh_ins=data.tracking.weigh_ins.filter(x=>x.date!==date);data.tracking.weigh_ins.push({date,weight:w});if(wa){data.tracking.waist_measurements=data.tracking.waist_measurements.filter(x=>x.date!==date);data.tracking.waist_measurements.push({date,waist:wa})}save();render();$('tracking-weight').value='';$('tracking-waist').value=''};$('exportJSON').onclick=()=>download('fitness-tracker-backup.json',JSON.stringify(data,null,2),'application/json');$('exportCSV').onclick=()=>{let r=[['Data','Peso (kg)','Girovita (cm)'],...data.tracking.weigh_ins.map(x=>[x.date,x.weight,data.tracking.waist_measurements.find(y=>y.date===x.date)?.waist||''])];download('fitness-tracker-tracking.csv',r.map(x=>x.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\n'),'text/csv;charset=utf-8')};$('import-file').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{if(f.name.toLowerCase().endsWith('.json')){let x=JSON.parse(r.result);if(!x.profile&&!x.user_profile)throw Error('Backup non valido');data=x;if(data.user_profile){data.profile={...defaultData.profile,...data.user_profile};delete data.user_profile}save();location.reload()}else alert('Per il backup completo usa JSON. Il CSV è solo esportazione tracking.')}catch(err){alert('Errore: '+err.message)}};r.readAsText(f);e.target.value=''};$('clearData').onclick=()=>{if(confirm('Cancellare tutti i dati?')){data=structuredClone(defaultData);save();init()}};init();
-</script>
+  <!-- =========================================================
+       STRUTTURA HTML DELL'APPLICAZIONE
+       ========================================================= -->
+  <main class="app">
+    <!-- Intestazione -->
+    <header class="header">
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambia tema">🌙</button>
+      <h1>🏋️ Fitness Tracker</h1>
+      <p>Il tuo piano dieta e allenamento personale</p>
+    </header>
+
+    <!-- Navigazione orizzontale scorrevole -->
+    <nav class="nav-tabs" aria-label="Sezioni applicazione">
+      <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
+      <button class="nav-tab" data-tab="profile">Profilo</button>
+      <button class="nav-tab" data-tab="workouts">Allenamenti</button>
+      <button class="nav-tab" data-tab="nutrition">Dieta</button>
+      <button class="nav-tab" data-tab="tracking">Tracking</button>
+      <button class="nav-tab" data-tab="backup">Backup</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="tab-content">
+      <div class="card">
+        <div class="section-head">
+          <h2>📊 Dati personali</h2>
+          <button id="editDashboard" class="icon-btn">✏️ Modifica</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div id="stat-name" class="stat-value">—</div><div class="stat-label">Nome</div></div>
+          <div class="stat-card"><div id="stat-weight" class="stat-value">—</div><div class="stat-label">Peso attuale</div></div>
+          <div class="stat-card"><div id="stat-bmi" class="stat-value">—</div><div class="stat-label">BMI</div></div>
+          <div class="stat-card"><div id="stat-target" class="stat-value">—</div><div class="stat-label">Target</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>📅 Piano settimanale</h2>
+          <button id="editWeeklyPlan" class="icon-btn">✏️ Modifica</button>
+        </div>
+        <div id="weekly-plan-display"></div>
+      </div>
+    </section>
+
+    <!-- Profilo -->
+    <section id="profile" class="tab-content hidden">
+      <div class="card">
+        <h2>👤 Profilo e obiettivi</h2>
+        <div id="profile-form"></div>
+        <button id="saveProfile" class="btn btn-success">💾 Salva profilo</button>
+      </div>
+    </section>
+
+    <!-- Allenamenti -->
+    <section id="workouts" class="tab-content hidden">
+      <div class="card">
+        <div class="section-head">
+          <h2>💪 Allenamenti</h2>
+          <button id="editWorkouts" class="icon-btn">✏️ Modifica</button>
+        </div>
+        <div id="workouts-display"></div>
+      </div>
+    </section>
+
+    <!-- Dieta -->
+    <section id="nutrition" class="tab-content hidden">
+      <div class="card">
+        <div class="section-head">
+          <h2>🥗 Dieta</h2>
+          <button id="editNutrition" class="icon-btn">✏️ Modifica</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div id="stat-calories" class="stat-value">—</div><div class="stat-label">Kcal/giorno</div></div>
+          <div class="stat-card"><div id="stat-protein" class="stat-value">—</div><div class="stat-label">Proteine</div></div>
+          <div class="stat-card"><div id="stat-carbs" class="stat-value">—</div><div class="stat-label">Carboidrati</div></div>
+          <div class="stat-card"><div id="stat-fat" class="stat-value">—</div><div class="stat-label">Grassi</div></div>
+        </div>
+        <div id="meals-display"></div>
+      </div>
+    </section>
+
+    <!-- Tracking -->
+    <section id="tracking" class="tab-content hidden">
+      <div class="card">
+        <h2>📈 Tracking</h2>
+        <div class="form-group"><label for="tracking-date">Data</label><input id="tracking-date" type="date"></div>
+        <div class="form-group"><label for="tracking-weight">Peso (kg)</label><input id="tracking-weight" type="number" step="0.1"></div>
+        <div class="form-group"><label for="tracking-waist">Girovita (cm)</label><input id="tracking-waist" type="number" step="0.5"></div>
+        <button id="addTracking" class="btn btn-success">➕ Aggiungi misurazione</button>
+        <h3>Storico</h3>
+        <div id="tracking-history"></div>
+      </div>
+    </section>
+
+    <!-- Backup -->
+    <section id="backup" class="tab-content hidden">
+      <div class="card">
+        <h2>💾 Backup</h2>
+        <div class="btn-group">
+          <button id="exportJSON" class="btn btn-success">📄 Esporta JSON</button>
+          <button id="exportCSV" class="btn btn-primary">📊 Esporta CSV Excel</button>
+        </div>
+        <div class="form-group" style="margin-top:14px">
+          <label class="btn btn-primary" for="import-file">📁 Importa JSON/CSV</label>
+          <input id="import-file" type="file" accept=".json,.csv" hidden>
+        </div>
+        <button id="clearData" class="btn btn-danger">⚠️ Cancella dati</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modale unica riutilizzata per tutte le modifiche -->
+  <div id="editor-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <div class="modal-header"><h2 id="modal-title">Modifica</h2></div>
+      <div id="modal-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button id="modal-save" class="btn btn-success">💾 Salva modifiche</button>
+        <button id="modal-close" class="btn btn-danger">✕ Annulla</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       1. DATI PREDEFINITI E STORAGE
+       ========================================================= */
+    const defaultData = {
+      profile: {
+        name: "Luca",
+        weight_kg: 80,
+        height_cm: 183,
+        target_weight_kg: 75,
+        age: "",
+        sex: "",
+        activity_level: "moderate",
+        goal: "Dimagrimento e rinforzo muscolare",
+        notes: ""
+      },
+      weekly_plan: {
+        monday: { type: "Forza", workout: "A", cardio_min: 0 },
+        tuesday: { type: "Cardio", workout: "Corsa", cardio_min: 35 },
+        wednesday: { type: "Forza", workout: "B", cardio_min: 0 },
+        thursday: { type: "Riposo attivo", workout: "Camminata", cardio_min: 30 },
+        friday: { type: "Forza", workout: "A", cardio_min: 0 },
+        saturday: { type: "Circuito leggero", workout: "C", cardio_min: 20 },
+        sunday: { type: "Riposo", workout: "", cardio_min: 0 }
+      },
+      workouts: {
+        A: [
+          { name: "Squat con manubri", sets: 3, reps: "8-12", rest: 75 },
+          { name: "Rematore con manubri", sets: 3, reps: "8-12", rest: 75 },
+          { name: "Chest press da terra", sets: 3, reps: "8-12", rest: 75 }
+        ],
+        B: [
+          { name: "Affondi in avanti", sets: 3, reps: "8-12", rest: 75 },
+          { name: "Floor press", sets: 3, reps: "8-12", rest: 75 },
+          { name: "Hip thrust", sets: 3, reps: "8-12", rest: 75 }
+        ],
+        C: [
+          { name: "Squat corpo libero", sets: 3, reps: "30-40 sec", rest: 30 },
+          { name: "Curl manubri", sets: 3, reps: "30-40 sec", rest: 30 }
+        ]
+      },
+      nutrition: {
+        daily_calories: 2000,
+        protein_g: 140,
+        carbs_g: 200,
+        fat_g: 65,
+        notes: "Bevi 2–2,5 litri di acqua al giorno.",
+        meals: [
+          { name: "Colazione", foods: ["yogurt greco", "avena", "frutta"] },
+          { name: "Pranzo", foods: ["riso/patate", "pollo/tonno", "verdure"] },
+          { name: "Spuntino", foods: ["frutto", "yogurt/uova"] },
+          { name: "Cena", foods: ["pesce/carne/legumi", "verdure"] }
+        ]
+      },
+      tracking: { weigh_ins: [], waist_measurements: [] }
+    };
+
+    let data = JSON.parse(localStorage.getItem("fitnessTrackerData") || "null") || structuredClone(defaultData);
+    data = normalizeData(data);
+
+    function normalizeData(value) {
+      const source = value || {};
+      if (source.user_profile && !source.profile) source.profile = source.user_profile;
+      return {
+        ...structuredClone(defaultData),
+        ...source,
+        profile: { ...defaultData.profile, ...(source.profile || {}) },
+        weekly_plan: { ...defaultData.weekly_plan, ...(source.weekly_plan || {}) },
+        workouts: source.workouts || structuredClone(defaultData.workouts),
+        nutrition: { ...defaultData.nutrition, ...(source.nutrition || {}) },
+        tracking: { ...defaultData.tracking, ...(source.tracking || {}) }
+      };
+    }
+
+    const $ = id => document.getElementById(id);
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[char]));
+
+    function saveData() {
+      localStorage.setItem("fitnessTrackerData", JSON.stringify(data));
+    }
+
+    /* =========================================================
+       2. NAVIGAZIONE E TEMA
+       ========================================================= */
+    document.querySelectorAll(".nav-tab").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab-content").forEach(section => section.classList.add("hidden"));
+        document.querySelectorAll(".nav-tab").forEach(item => item.classList.remove("active"));
+        $(button.dataset.tab).classList.remove("hidden");
+        button.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    function loadTheme() {
+      const isDark = localStorage.getItem("fitnessTheme") === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("themeToggle").textContent = isDark ? "☀️" : "🌙";
+    }
+
+    $("themeToggle").addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("fitnessTheme", isDark ? "dark" : "light");
+      $("themeToggle").textContent = isDark ? "☀️" : "🌙";
+    });
+
+    /* =========================================================
+       3. MODALE RIUTILIZZABILE
+       ========================================================= */
+    let modalSaveAction = () => {};
+
+    function openModal(title, content, saveAction) {
+      $("modal-title").textContent = title;
+      $("modal-body").innerHTML = content;
+      modalSaveAction = saveAction;
+      $("editor-modal").classList.remove("hidden");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeModal() {
+      $("editor-modal").classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+
+    $("modal-close").addEventListener("click", closeModal);
+    $("editor-modal").addEventListener("click", event => {
+      if (event.target === $("editor-modal")) closeModal();
+    });
+    $("modal-save").addEventListener("click", () => {
+      modalSaveAction();
+      saveData();
+      renderAll();
+      closeModal();
+      alert("Modifiche salvate.");
+    });
+
+    /* =========================================================
+       4. RENDERING DASHBOARD, ALLENAMENTI E DIETA
+       ========================================================= */
+    function renderAll() {
+      renderDashboard();
+      renderProfileForm();
+      renderWorkouts();
+      renderNutrition();
+      renderTracking();
+    }
+
+    function renderDashboard() {
+      const profile = data.profile;
+      const bmi = profile.height_cm > 0
+        ? (profile.weight_kg / (profile.height_cm / 100) ** 2).toFixed(1)
+        : "—";
+
+      $("stat-name").textContent = profile.name || "—";
+      $("stat-weight").textContent = `${profile.weight_kg} kg`;
+      $("stat-bmi").textContent = bmi;
+      $("stat-target").textContent = `${profile.target_weight_kg} kg`;
+
+      const dayNames = {
+        monday: "Lunedì", tuesday: "Martedì", wednesday: "Mercoledì",
+        thursday: "Giovedì", friday: "Venerdì", saturday: "Sabato", sunday: "Domenica"
+      };
+
+      $("weekly-plan-display").innerHTML = Object.entries(data.weekly_plan).map(([day, plan]) => `
+        <div class="workout-day">
+          <h3>${dayNames[day]}</h3>
+          <div>Tipo: <b>${esc(plan.type)}</b></div>
+          ${plan.workout ? `<div>Scheda/attività: <b>${esc(plan.workout)}</b></div>` : ""}
+          ${plan.cardio_min ? `<div>Cardio: <b>${plan.cardio_min} min</b></div>` : ""}
+        </div>
+      `).join("");
+    }
+
+    function renderProfileForm() {
+      const p = data.profile;
+      $("profile-form").innerHTML = `
+        <div class="form-group"><label>Nome</label><input id="profile-name" value="${esc(p.name)}"></div>
+        <div class="form-group"><label>Peso (kg)</label><input id="profile-weight" type="number" step="0.1" value="${p.weight_kg}"></div>
+        <div class="form-group"><label>Altezza (cm)</label><input id="profile-height" type="number" value="${p.height_cm}"></div>
+        <div class="form-group"><label>Peso target (kg)</label><input id="profile-target" type="number" step="0.1" value="${p.target_weight_kg}"></div>
+        <div class="form-group"><label>Età</label><input id="profile-age" type="number" value="${p.age}"></div>
+        <div class="form-group"><label>Sesso</label><select id="profile-sex"><option value="">Non specificato</option><option ${p.sex === "Maschio" ? "selected" : ""}>Maschio</option><option ${p.sex === "Femmina" ? "selected" : ""}>Femmina</option><option ${p.sex === "Altro" ? "selected" : ""}>Altro</option></select></div>
+        <div class="form-group"><label>Livello attività</label><select id="profile-activity"><option value="sedentary">Sedentario</option><option value="light">Leggero</option><option value="moderate">Moderato</option><option value="active">Attivo</option><option value="very-active">Molto attivo</option></select></div>
+        <div class="form-group"><label>Obiettivo</label><input id="profile-goal" value="${esc(p.goal)}"></div>
+        <div class="form-group"><label>Note personali</label><textarea id="profile-notes">${esc(p.notes)}</textarea></div>
+      `;
+      $("profile-activity").value = p.activity_level;
+    }
+
+    function renderWorkouts() {
+      $("workouts-display").innerHTML = Object.entries(data.workouts).map(([id, exercises]) => `
+        <div class="workout-day">
+          <h3>Scheda ${esc(id)}</h3>
+          ${exercises.map(exercise => `
+            <div class="workout-exercise">
+              <h4>${esc(exercise.name)}</h4>
+              <div class="workout-details">
+                <span class="workout-detail">Serie: ${exercise.sets}</span>
+                <span class="workout-detail">Ripetizioni: ${esc(exercise.reps)}</span>
+                <span class="workout-detail">Recupero: ${exercise.rest}s</span>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `).join("");
+    }
+
+    function renderNutrition() {
+      const n = data.nutrition;
+      $("stat-calories").textContent = n.daily_calories;
+      $("stat-protein").textContent = `${n.protein_g}g`;
+      $("stat-carbs").textContent = `${n.carbs_g}g`;
+      $("stat-fat").textContent = `${n.fat_g}g`;
+      $("meals-display").innerHTML = `${n.notes ? `<p class="mini-note">${esc(n.notes)}</p>` : ""}${n.meals.map(meal => `
+        <div class="meal-plan"><h3>${esc(meal.name)}</h3><div class="meal-foods">
+          ${meal.foods.map(food => `<span class="meal-food">${esc(food)}</span>`).join("")}
+        </div></div>
+      `).join("")}`;
+    }
+
+    function renderTracking() {
+      const entries = [...data.tracking.weigh_ins].sort((a, b) => b.date.localeCompare(a.date));
+      $("tracking-history").innerHTML = entries.length ? entries.map(entry => {
+        const waist = data.tracking.waist_measurements.find(item => item.date === entry.date);
+        return `<div class="tracking-entry"><div class="tracking-date">${new Date(entry.date + "T12:00:00").toLocaleDateString("it-IT")}</div><div>Peso: <b>${entry.weight} kg</b></div>${waist ? `<div>Girovita: <b>${waist.waist} cm</b></div>` : ""}</div>`;
+      }).join("") : `<p class="mini-note">Nessuna misurazione.</p>`;
+    }
+
+    /* =========================================================
+       5. MODIFICA DATI PERSONALI
+       ========================================================= */
+    function profileFields(prefix) {
+      const p = data.profile;
+      return `
+        <div class="form-group"><label>Nome</label><input id="${prefix}-name" value="${esc(p.name)}"></div>
+        <div class="form-group"><label>Peso (kg)</label><input id="${prefix}-weight" type="number" step="0.1" value="${p.weight_kg}"></div>
+        <div class="form-group"><label>Altezza (cm)</label><input id="${prefix}-height" type="number" value="${p.height_cm}"></div>
+        <div class="form-group"><label>Peso target (kg)</label><input id="${prefix}-target" type="number" step="0.1" value="${p.target_weight_kg}"></div>
+        <div class="form-group"><label>Età</label><input id="${prefix}-age" type="number" value="${p.age}"></div>
+        <div class="form-group"><label>Sesso</label><select id="${prefix}-sex"><option value="">Non specificato</option><option ${p.sex === "Maschio" ? "selected" : ""}>Maschio</option><option ${p.sex === "Femmina" ? "selected" : ""}>Femmina</option><option ${p.sex === "Altro" ? "selected" : ""}>Altro</option></select></div>
+        <div class="form-group"><label>Livello attività</label><select id="${prefix}-activity"><option value="sedentary">Sedentario</option><option value="light">Leggero</option><option value="moderate">Moderato</option><option value="active">Attivo</option><option value="very-active">Molto attivo</option></select></div>
+        <div class="form-group"><label>Obiettivo</label><input id="${prefix}-goal" value="${esc(p.goal)}"></div>
+        <div class="form-group"><label>Note personali</label><textarea id="${prefix}-notes">${esc(p.notes)}</textarea></div>
+      `;
+    }
+
+    function readProfile(prefix) {
+      data.profile = {
+        name: $(`${prefix}-name`).value.trim(),
+        weight_kg: +$(`${prefix}-weight`).value,
+        height_cm: +$(`${prefix}-height`).value,
+        target_weight_kg: +$(`${prefix}-target`).value,
+        age: $(`${prefix}-age`).value,
+        sex: $(`${prefix}-sex`).value,
+        activity_level: $(`${prefix}-activity`).value,
+        goal: $(`${prefix}-goal`).value,
+        notes: $(`${prefix}-notes`).value
+      };
+    }
+
+    $("saveProfile").addEventListener("click", () => {
+      readProfile("profile");
+      saveData();
+      renderAll();
+      alert("Profilo salvato.");
+    });
+
+    $("editDashboard").addEventListener("click", () => {
+      openModal("Modifica dati personali", profileFields("dash"), () => readProfile("dash"));
+      $("dash-activity").value = data.profile.activity_level;
+    });
+
+    /* =========================================================
+       6. MODIFICA PIANO SETTIMANALE
+       ========================================================= */
+    $("editWeeklyPlan").addEventListener("click", () => {
+      const dayNames = { monday: "Lunedì", tuesday: "Martedì", wednesday: "Mercoledì", thursday: "Giovedì", friday: "Venerdì", saturday: "Sabato", sunday: "Domenica" };
+      let html = `<p class="mini-note">Puoi cambiare tipo di allenamento, attività, scheda e minuti di cardio per ogni giorno.</p>`;
+      Object.entries(data.weekly_plan).forEach(([day, plan]) => {
+        html += `<div class="workout-day"><h3>${dayNames[day]}</h3><div class="form-group"><label>Tipo di allenamento</label><input data-day="${day}" data-field="type" value="${esc(plan.type)}"></div><div class="form-group"><label>Scheda o attività</label><input data-day="${day}" data-field="workout" value="${esc(plan.workout)}"></div><div class="form-group"><label>Cardio (minuti)</label><input data-day="${day}" data-field="cardio_min" type="number" value="${plan.cardio_min || 0}"></div></div>`;
+      });
+      openModal("Modifica piano settimanale", html, () => {
+        document.querySelectorAll("#modal-body [data-day]").forEach(input => {
+          const plan = data.weekly_plan[input.dataset.day];
+          plan[input.dataset.field] = input.dataset.field === "cardio_min" ? +input.value : input.value;
+        });
+      });
+    });
+
+    /* =========================================================
+       7. MODIFICA SCHEDE ED ESERCIZI
+       ========================================================= */
+    function exerciseEditor(id, exercise = { name: "Nuovo esercizio", sets: 3, reps: "8-12", rest: 60 }) {
+      return `<div class="workout-exercise" data-exercise-row data-workout="${esc(id)}"><button class="delete-line" data-delete-exercise aria-label="Elimina esercizio">×</button><div class="form-group"><label>Esercizio</label><input data-field="name" value="${esc(exercise.name)}"></div><div class="form-group"><label>Serie</label><input data-field="sets" type="number" value="${exercise.sets}"></div><div class="form-group"><label>Ripetizioni o tempo</label><input data-field="reps" value="${esc(exercise.reps)}"></div><div class="form-group"><label>Recupero (secondi)</label><input data-field="rest" type="number" value="${exercise.rest}"></div></div>`;
+    }
+
+    function bindWorkoutEditor() {
+      document.querySelectorAll("[data-delete-exercise]").forEach(button => button.onclick = () => button.closest("[data-exercise-row]").remove());
+      document.querySelectorAll("[data-add-exercise]").forEach(button => button.onclick = () => {
+        $(button.dataset.addExercise).insertAdjacentHTML("beforeend", exerciseEditor(button.dataset.workout));
+        bindWorkoutEditor();
+      });
+      document.querySelectorAll("[data-delete-workout]").forEach(button => button.onclick = () => button.closest("[data-workout-block]").remove());
+    }
+
+    $("editWorkouts").addEventListener("click", () => {
+      let html = `<p class="mini-note">Modifica, aggiungi o elimina schede ed esercizi.</p>`;
+      Object.entries(data.workouts).forEach(([id, exercises]) => {
+        const listId = `exercise-list-${Math.random().toString(36).slice(2)}`;
+        html += `<div class="workout-day" data-workout-block><button class="delete-line" data-delete-workout aria-label="Elimina scheda">×</button><div class="form-group"><label>Nome scheda</label><input data-workout-name value="${esc(id)}"></div><div id="${listId}">${exercises.map(exercise => exerciseEditor(id, exercise)).join("")}</div><button class="btn btn-outline" data-add-exercise data-workout="${esc(id)}" data-add-exercise="${listId}">＋ Aggiungi esercizio</button></div>`;
+      });
+      html += `<button id="add-workout" class="btn btn-primary">＋ Aggiungi scheda</button>`;
+      openModal("Modifica allenamenti", html, () => {
+        const updated = {};
+        document.querySelectorAll("[data-workout-block]").forEach(block => {
+          const name = block.querySelector("[data-workout-name]").value.trim() || "Scheda";
+          updated[name] = [...block.querySelectorAll("[data-exercise-row]")].map(row => ({ name: row.querySelector('[data-field="name"]').value, sets: +row.querySelector('[data-field="sets"]').value, reps: row.querySelector('[data-field="reps"]').value, rest: +row.querySelector('[data-field="rest"]').value }));
+        });
+        data.workouts = updated;
+      });
+      bindWorkoutEditor();
+      $("add-workout").onclick = () => {
+        const id = `Nuova scheda ${document.querySelectorAll("[data-workout-block]").length + 1}`;
+        $("add-workout").insertAdjacentHTML("beforebegin", `<div class="workout-day" data-workout-block><button class="delete-line" data-delete-workout aria-label="Elimina scheda">×</button><div class="form-group"><label>Nome scheda</label><input data-workout-name value="${id}"></div><div data-new-list>${exerciseEditor(id)}</div><button class="btn btn-outline" data-add-exercise data-workout="${id}" data-add-exercise="new-list">＋ Aggiungi esercizio</button></div>`);
+        bindWorkoutEditor();
+      };
+    });
+
+    /* =========================================================
+       8. MODIFICA DIETA E PASTI
+       ========================================================= */
+    function mealEditor(meal = { name: "Nuovo pasto", foods: [] }) {
+      return `<div class="meal-plan meal-edit"><button class="delete-line" data-delete-meal aria-label="Elimina pasto">×</button><div class="form-group"><label>Nome pasto</label><input data-meal-name value="${esc(meal.name)}"></div><div class="form-group"><label>Alimenti separati da virgola</label><textarea data-meal-foods>${esc(meal.foods.join(", "))}</textarea></div></div>`;
+    }
+
+    $("editNutrition").addEventListener("click", () => {
+      const n = data.nutrition;
+      const html = `<div class="form-group"><label>Calorie giornaliere</label><input id="nutrition-calories" type="number" value="${n.daily_calories}"></div><div class="form-group"><label>Proteine (g)</label><input id="nutrition-protein" type="number" value="${n.protein_g}"></div><div class="form-group"><label>Carboidrati (g)</label><input id="nutrition-carbs" type="number" value="${n.carbs_g}"></div><div class="form-group"><label>Grassi (g)</label><input id="nutrition-fat" type="number" value="${n.fat_g}"></div><div class="form-group"><label>Note dieta</label><textarea id="nutrition-notes">${esc(n.notes)}</textarea></div><div id="meal-list">${n.meals.map(mealEditor).join("")}</div><button id="add-meal" class="btn btn-primary">＋ Aggiungi pasto</button>`;
+      openModal("Modifica dieta", html, () => {
+        data.nutrition.daily_calories = +$("nutrition-calories").value;
+        data.nutrition.protein_g = +$("nutrition-protein").value;
+        data.nutrition.carbs_g = +$("nutrition-carbs").value;
+        data.nutrition.fat_g = +$("nutrition-fat").value;
+        data.nutrition.notes = $("nutrition-notes").value;
+        data.nutrition.meals = [...document.querySelectorAll(".meal-edit")].map(meal => ({ name: meal.querySelector("[data-meal-name]").value, foods: meal.querySelector("[data-meal-foods]").value.split(",").map(food => food.trim()).filter(Boolean) }));
+      });
+      document.querySelectorAll("[data-delete-meal]").forEach(button => button.onclick = () => button.closest(".meal-edit").remove());
+      $("add-meal").onclick = () => {
+        $("meal-list").insertAdjacentHTML("beforeend", mealEditor());
+        document.querySelectorAll("[data-delete-meal]").forEach(button => button.onclick = () => button.closest(".meal-edit").remove());
+      };
+    });
+
+    /* =========================================================
+       9. TRACKING E BACKUP
+       ========================================================= */
+    $("addTracking").addEventListener("click", () => {
+      const date = $("tracking-date").value;
+      const weight = +$("tracking-weight").value;
+      const waist = +$("tracking-waist").value;
+      if (!date || !weight) return alert("Inserisci almeno data e peso.");
+      data.tracking.weigh_ins = data.tracking.weigh_ins.filter(item => item.date !== date);
+      data.tracking.weigh_ins.push({ date, weight });
+      if (waist) {
+        data.tracking.waist_measurements = data.tracking.waist_measurements.filter(item => item.date !== date);
+        data.tracking.waist_measurements.push({ date, waist });
+      }
+      saveData();
+      renderTracking();
+      $("tracking-weight").value = "";
+      $("tracking-waist").value = "";
+    });
+
+    function download(filename, content, type) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([content], { type }));
+      link.download = filename;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(link.href), 500);
+    }
+
+    $("exportJSON").onclick = () => download("fitness-tracker-backup.json", JSON.stringify(data, null, 2), "application/json");
+
+    $("exportCSV").onclick = () => {
+      const rows = [["Data", "Peso (kg)", "Girovita (cm)"], ...data.tracking.weigh_ins.map(item => [item.date, item.weight, data.tracking.waist_measurements.find(waist => waist.date === item.date)?.waist || ""])];
+      const csv = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(";")).join("\n");
+      download("fitness-tracker-tracking.csv", csv, "text/csv;charset=utf-8");
+    };
+
+    $("import-file").onchange = event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          if (!file.name.toLowerCase().endsWith(".json")) throw new Error("Per il ripristino completo usa un file JSON.");
+          data = normalizeData(JSON.parse(reader.result));
+          saveData();
+          renderAll();
+          alert("Backup JSON importato.");
+        } catch (error) {
+          alert(`Errore importazione: ${error.message}`);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    };
+
+    $("clearData").onclick = () => {
+      if (confirm("Cancellare tutti i dati?")) {
+        data = structuredClone(defaultData);
+        saveData();
+        renderAll();
+      }
+    };
+
+    /* =========================================================
+       10. AVVIO APPLICAZIONE
+       ========================================================= */
+    function init() {
+      loadTheme();
+      $("tracking-date").value = new Date().toISOString().slice(0, 10);
+      renderAll();
+    }
+
+    init();
+  </script>
 </body>
 </html>
