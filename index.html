@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#4CAF50">
+    <title>Fitness Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 8px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            -webkit-appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6fd6;
+        }
+
+        .btn-danger {
+            background: #f44336;
+        }
+
+        .btn-danger:hover {
+            background: #da190b;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .workout-day {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .workout-day h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .workout-exercise {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .workout-exercise h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .workout-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .workout-detail {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .meal-plan {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .meal-plan h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .meal-foods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .meal-food {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .tracking-entry {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .tracking-date {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            background: #667eea;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            background: #5a6fd6;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .nav-tab {
+                font-size: 12px;
+                padding: 10px 6px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ Fitness Tracker</h1>
+            <p>Il tuo piano dieta e allenamento personale</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="nav-tab" onclick="showTab('profile')">Profilo</button>
+            <button class="nav-tab" onclick="showTab('workouts')">Allenamenti</button>
+            <button class="nav-tab" onclick="showTab('nutrition')">Nutrizione</button>
+            <button class="nav-tab" onclick="showTab('tracking')">Tracking</button>
+            <button class="nav-tab" onclick="showTab('backup')">Backup</button>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="tab-content">
+            <div class="card">
+                <h2>📊 Statistiche Personali</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-weight">80 kg</div>
+                        <div class="stat-label">Peso Attuale</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-height">183 cm</div>
+                        <div class="stat-label">Altezza</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-bmi">23.9</div>
+                        <div class="stat-label">BMI</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-target">75 kg</div>
+                        <div class="stat-label">Peso Target</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📅 Piano Settimanale</h2>
+                <div id="weekly-plan-display"></div>
+            </div>
+        </div>
+
+        <!-- PROFILO -->
+        <div id="profile" class="tab-content hidden">
+            <div class="card">
+                <h2>👤 Profilo Utente</h2>
+                <div class="form-group">
+                    <label for="weight">Peso (kg)</label>
+                    <input type="number" id="weight" step="0.1" value="80">
+                </div>
+                <div class="form-group">
+                    <label for="height">Altezza (cm)</label>
+                    <input type="number" id="height" value="183">
+                </div>
+                <div class="form-group">
+                    <label for="target-weight">Peso Target (kg)</label>
+                    <input type="number" id="target-weight" step="0.1" value="75">
+                </div>
+                <div class="form-group">
+                    <label for="activity-level">Livello di Attività</label>
+                    <select id="activity-level">
+                        <option value="sedentary">Sedentario</option>
+                        <option value="light">Leggero</option>
+                        <option value="moderate" selected>Moderato</option>
+                        <option value="active">Attivo</option>
+                        <option value="very-active">Molto Attivo</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="saveProfile()">💾 Salva Profilo</button>
+            </div>
+        </div>
+
+        <!-- ALLENAMENTI -->
+        <div id="workouts" class="tab-content hidden">
+            <div class="card">
+                <h2>💪 Schede Allenamento</h2>
+                <div id="workouts-display"></div>
+                <button class="btn btn-secondary" onclick="editWorkouts()">✏️ Modifica Schede</button>
+            </div>
+        </div>
+
+        <!-- NUTRIZIONE -->
+        <div id="nutrition" class="tab-content hidden">
+            <div class="card">
+                <h2>🥗 Piano Nutrizionale</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-calories">2000</div>
+                        <div class="stat-label">Kcal/giorno</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-protein">140g</div>
+                        <div class="stat-label">Proteine</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-carbs">200g</div>
+                        <div class="stat-label">Carboidrati</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-fat">65g</div>
+                        <div class="stat-label">Grassi</div>
+                    </div>
+                </div>
+
+                <div id="meals-display"></div>
+                <button class="btn btn-secondary" onclick="editNutrition()">✏️ Modifica Nutrizione</button>
+            </div>
+        </div>
+
+        <!-- TRACKING -->
+        <div id="tracking" class="tab-content hidden">
+            <div class="card">
+                <h2>📈 Monitoraggio Progressi</h2>
+                <div class="form-group">
+                    <label for="tracking-date">Data</label>
+                    <input type="date" id="tracking-date">
+                </div>
+                <div class="form-group">
+                    <label for="tracking-weight">Peso (kg)</label>
+                    <input type="number" id="tracking-weight" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="tracking-waist">Girovita (cm)</label>
+                    <input type="number" id="tracking-waist" step="0.5">
+                </div>
+                <button class="btn" onclick="addTrackingEntry()">➕ Aggiungi Misurazione</button>
+
+                <h3 style="margin-top: 20px; color: #667eea;">Storico Misurazioni</h3>
+                <div id="tracking-history"></div>
+            </div>
+        </div>
+
+        <!-- BACKUP -->
+        <div id="backup" class="tab-content hidden">
+            <div class="card">
+                <h2>💾 Backup & Ripristino</h2>
+                
+                <h3 style="margin-bottom: 15px; color: #667eea;">Esporta Dati</h3>
+                <div class="btn-group">
+                    <button class="btn" onclick="exportJSON()">📄 Esporta JSON</button>
+                    <button class="btn btn-secondary" onclick="exportExcel()">📊 Esporta Excel (CSV)</button>
+                </div>
+
+                <h3 style="margin-bottom: 15px; color: #667eea; margin-top: 20px;">Importa Dati</h3>
+                <div class="file-input-wrapper">
+                    <input type="file" id="import-file" accept=".json,.csv" onchange="importFile(this)">
+                    <label for="import-file" class="file-input-label">📁 Seleziona File da Importare</label>
+                </div>
+                <p style="margin-top: 10px; color: #666; font-size: 13px;">
+                    Supporta file JSON (backup completo) o CSV (dati tracking)
+                </p>
+
+                <h3 style="margin-bottom: 15px; color: #667eea; margin-top: 20px;">Gestione Dati</h3>
+                <button class="btn btn-danger" onclick="clearAllData()">⚠️ Cancella Tutti i Dati</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT WORKOUT -->
+    <div id="workout-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Modifica Scheda Allenamento</h2>
+            <div id="workout-edit-form"></div>
+            <button class="btn" onclick="saveWorkout()">💾 Salva Modifiche</button>
+            <button class="btn btn-danger" onclick="closeModal('workout-modal')">❌ Annulla</button>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT NUTRITION -->
+    <div id="nutrition-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Modifica Piano Nutrizionale</h2>
+            <div id="nutrition-edit-form"></div>
+            <button class="btn" onclick="saveNutrition()">💾 Salva Modifiche</button>
+            <button class="btn btn-danger" onclick="closeModal('nutrition-modal')">❌ Annulla</button>
+        </div>
+    </div>
+
+    <script>
+        // Default app data
+        const defaultData = {
+            user_profile: {
+                weight_kg: 80,
+                height_cm: 183,
+                target_weight_kg: 75,
+                activity_level: "moderate"
+            },
+            weekly_plan: {
+                monday: { type: "strength", workout: "A", cardio_min: 0 },
+                tuesday: { type: "cardio", workout: "", cardio_min: 35 },
+                wednesday: { type: "strength", workout: "B", cardio_min: 0 },
+                thursday: { type: "active_rest", workout: "", cardio_min: 30 },
+                friday: { type: "strength", workout: "A", cardio_min: 0 },
+                saturday: { type: "light_circuit", workout: "C", cardio_min: 20 },
+                sunday: { type: "rest", workout: "", cardio_min: 0 }
+            },
+            workouts: {
+                A: [
+                    { name: "Squat con manubri", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Rematore con manubri", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Chest press da terra", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Stacco rumeno", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Shoulder press", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Plank", sets: 3, reps: "30-45 sec", rest_sec: 60 }
+                ],
+                B: [
+                    { name: "Affondi in avanti", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Rematore a un braccio", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Floor press", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Hip thrust", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Alzate laterali", sets: 3, reps: "8-12", rest_sec: 75 },
+                    { name: "Dead bug", sets: 3, reps: "10/lato", rest_sec: 60 }
+                ],
+                C: [
+                    { name: "Squat corpo libero", sets: 3, reps: "30-40 sec", rest_sec: 30 },
+                    { name: "Mountain climber", sets: 3, reps: "30-40 sec", rest_sec: 30 },
+                    { name: "Curl manubri", sets: 3, reps: "30-40 sec", rest_sec: 30 },
+                    { name: "Slanci posteriori", sets: 3, reps: "30-40 sec", rest_sec: 30 },
+                    { name: "Plank laterale", sets: 3, reps: "30-40 sec", rest_sec: 30 },
+                    { name: "Crunch", sets: 3, reps: "30-40 sec", rest_sec: 30 }
+                ]
+            },
+            nutrition: {
+                daily_calories: 2000,
+                protein_g: 140,
+                carbs_g: 200,
+                fat_g: 65,
+                meals: [
+                    { name: "Colazione", foods: ["yogurt greco", "avena", "frutta"] },
+                    { name: "Pranzo", foods: ["riso/patate", "pollo/tonno", "verdure"] },
+                    { name: "Spuntino", foods: ["frutto", "yogurt/uova"] },
+                    { name: "Cena", foods: ["pesce/carne/legumi", "verdure", "carboidrati (se allenamento)"] }
+                ]
+            },
+            tracking: {
+                weigh_ins: [],
+                waist_measurements: [],
+                workout_logs: []
+            }
+        };
+
+        // Load data from localStorage or use default
+        let appData = JSON.parse(localStorage.getItem('fitnessTrackerData')) || JSON.parse(JSON.stringify(defaultData));
+
+        // Initialize app
+        function init() {
+            loadProfile();
+            renderDashboard();
+            renderWorkouts();
+            renderNutrition();
+            renderTrackingHistory();
+            document.getElementById('tracking-date').valueAsDate = new Date();
+        }
+
+        // Tab navigation
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            event.target.classList.add('active');
+        }
+
+        // Profile functions
+        function loadProfile() {
+            document.getElementById('weight').value = appData.user_profile.weight_kg;
+            document.getElementById('height').value = appData.user_profile.height_cm;
+            document.getElementById('target-weight').value = appData.user_profile.target_weight_kg;
+            document.getElementById('activity-level').value = appData.user_profile.activity_level;
+        }
+
+        function saveProfile() {
+            appData.user_profile.weight_kg = parseFloat(document.getElementById('weight').value);
+            appData.user_profile.height_cm = parseFloat(document.getElementById('height').value);
+            appData.user_profile.target_weight_kg = parseFloat(document.getElementById('target-weight').value);
+            appData.user_profile.activity_level = document.getElementById('activity-level').value;
+            saveData();
+            renderDashboard();
+            alert('✅ Profilo salvato con successo!');
+        }
+
+        // Dashboard rendering
+        function renderDashboard() {
+            const profile = appData.user_profile;
+            const bmi = (profile.weight_kg / Math.pow(profile.height_cm / 100, 2)).toFixed(1);
+
+            document.getElementById('stat-weight').textContent = profile.weight_kg + ' kg';
+            document.getElementById('stat-height').textContent = profile.height_cm + ' cm';
+            document.getElementById('stat-bmi').textContent = bmi;
+            document.getElementById('stat-target').textContent = profile.target_weight_kg + ' kg';
+
+            const days = {
+                monday: 'Lunedì',
+                tuesday: 'Martedì',
+                wednesday: 'Mercoledì',
+                thursday: 'Giovedì',
+                friday: 'Venerdì',
+                saturday: 'Sabato',
+                sunday: 'Domenica'
+            };
+
+            const types = {
+                strength: '💪 Forza',
+                cardio: '🏃 Cardio',
+                active_rest: '🚶 Riposo Attivo',
+                light_circuit: '🔄 Circuito Leggero',
+                rest: '😴 Riposo'
+            };
+
+            let html = '';
+            for (const [day, plan] of Object.entries(appData.weekly_plan)) {
+                html += `
+                    <div class="workout-day">
+                        <h3>${days[day]}</h3>
+                        <p><strong>Tipo:</strong> ${types[plan.type]}</p>
+                        ${plan.workout ? `<p><strong>Scheda:</strong> ${plan.workout}</p>` : ''}
+                        ${plan.cardio_min > 0 ? `<p><strong>Cardio:</strong> ${plan.cardio_min} min</p>` : ''}
+                    </div>
+                `;
+            }
+            document.getElementById('weekly-plan-display').innerHTML = html;
+        }
+
+        // Workout functions
+        function renderWorkouts() {
+            let html = '';
+            for (const [workoutId, exercises] of Object.entries(appData.workouts)) {
+                html += `
+                    <div class="workout-day">
+                        <h3>Scheda ${workoutId}</h3>
+                `;
+                exercises.forEach(ex => {
+                    html += `
+                        <div class="workout-exercise">
+                            <h4>${ex.name}</h4>
+                            <div class="workout-details">
+                                <span class="workout-detail">Serie: ${ex.sets}</span>
+                                <span class="workout-detail">Ripetizioni: ${ex.reps}</span>
+                                <span class="workout-detail">Recupero: ${ex.rest_sec}s</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            document.getElementById('workouts-display').innerHTML = html;
+        }
+
+        function editWorkouts() {
+            let html = '';
+            for (const [workoutId, exercises] of Object.entries(appData.workouts)) {
+                html += `<h3 style="color: #667eea; margin: 15px 0 10px;">Scheda ${workoutId}</h3>`;
+                exercises.forEach((ex, exIndex) => {
+                    html += `
+                        <div class="workout-exercise" style="margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label>Esercizio</label>
+                                <input type="text" class="edit-ex-name" value="${ex.name}" data-workout="${workoutId}" data-index="${exIndex}">
+                            </div>
+                            <div class="form-group">
+                                <label>Serie</label>
+                                <input type="number" class="edit-ex-sets" value="${ex.sets}" data-workout="${workoutId}" data-index="${exIndex}">
+                            </div>
+                            <div class="form-group">
+                                <label>Ripetizioni</label>
+                                <input type="text" class="edit-ex-reps" value="${ex.reps}" data-workout="${workoutId}" data-index="${exIndex}">
+                            </div>
+                            <div class="form-group">
+                                <label>Recupero (secondi)</label>
+                                <input type="number" class="edit-ex-rest" value="${ex.rest_sec}" data-workout="${workoutId}" data-index="${exIndex}">
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('workout-edit-form').innerHTML = html;
+            document.getElementById('workout-modal').classList.remove('hidden');
+        }
+
+        function saveWorkout() {
+            const names = document.querySelectorAll('.edit-ex-name');
+            const sets = document.querySelectorAll('.edit-ex-sets');
+            const reps = document.querySelectorAll('.edit-ex-reps');
+            const rests = document.querySelectorAll('.edit-ex-rest');
+
+            names.forEach((input, index) => {
+                const workoutId = input.dataset.workout;
+                const exIndex = input.dataset.index;
+                appData.workouts[workoutId][exIndex].name = input.value;
+                appData.workouts[workoutId][exIndex].sets = parseInt(sets[index].value);
+                appData.workouts[workoutId][exIndex].reps = reps[index].value;
+                appData.workouts[workoutId][exIndex].rest_sec = parseInt(rests[index].value);
+            });
+
+            saveData();
+            renderWorkouts();
+            closeModal('workout-modal');
+            alert('✅ Scheda allenamento salvata!');
+        }
+
+        // Nutrition functions
+        function renderNutrition() {
+            const nut = appData.nutrition;
+            document.getElementById('stat-calories').textContent = nut.daily_calories;
+            document.getElementById('stat-protein').textContent = nut.protein_g + 'g';
+            document.getElementById('stat-carbs').textContent = nut.carbs_g + 'g';
+            document.getElementById('stat-fat').textContent = nut.fat_g + 'g';
+
+            let html = '';
+            nut.meals.forEach(meal => {
+                html += `
+                    <div class="meal-plan">
+                        <h3>${meal.name}</h3>
+                        <div class="meal-foods">
+                            ${meal.foods.map(food => `<span class="meal-food">${food}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('meals-display').innerHTML = html;
+        }
+
+        function editNutrition() {
+            const nut = appData.nutrition;
+            let html = `
+                <div class="form-group">
+                    <label>Calorie giornaliere</label>
+                    <input type="number" id="edit-daily-calories" value="${nut.daily_calories}">
+                </div>
+                <div class="form-group">
+                    <label>Proteine (g)</label>
+                    <input type="number" id="edit-protein" value="${nut.protein_g}">
+                </div>
+                <div class="form-group">
+                    <label>Carboidrati (g)</label>
+                    <input type="number" id="edit-carbs" value="${nut.carbs_g}">
+                </div>
+                <div class="form-group">
+                    <label>Grassi (g)</label>
+                    <input type="number" id="edit-fat" value="${nut.fat_g}">
+                </div>
+                <h3 style="margin: 20px 0 15px; color: #667eea;">Pasti</h3>
+            `;
+
+            nut.meals.forEach((meal, index) => {
+                html += `
+                    <div class="meal-plan">
+                        <div class="form-group">
+                            <label>Nome pasto ${index + 1}</label>
+                            <input type="text" class="edit-meal-name" value="${meal.name}" data-index="${index}">
+                        </div>
+                        <div class="form-group">
+                            <label>Cibi (separati da virgola)</label>
+                            <input type="text" class="edit-meal-foods" value="${meal.foods.join(', ')}" data-index="${index}">
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('nutrition-edit-form').innerHTML = html;
+            document.getElementById('nutrition-modal').classList.remove('hidden');
+        }
+
+        function saveNutrition() {
+            appData.nutrition.daily_calories = parseInt(document.getElementById('edit-daily-calories').value);
+            appData.nutrition.protein_g = parseInt(document.getElementById('edit-protein').value);
+            appData.nutrition.carbs_g = parseInt(document.getElementById('edit-carbs').value);
+            appData.nutrition.fat_g = parseInt(document.getElementById('edit-fat').value);
+
+            const names = document.querySelectorAll('.edit-meal-name');
+            const foods = document.querySelectorAll('.edit-meal-foods');
+
+            names.forEach((input, index) => {
+                appData.nutrition.meals[index].name = input.value;
+                appData.nutrition.meals[index].foods = foods[index].value.split(',').map(f => f.trim());
+            });
+
+            saveData();
+            renderNutrition();
+            closeModal('nutrition-modal');
+            alert('✅ Piano nutrizionale salvato!');
+        }
+
+        // Tracking functions
+        function addTrackingEntry() {
+            const date = document.getElementById('tracking-date').value;
+            const weight = parseFloat(document.getElementById('tracking-weight').value);
+            const waist = parseFloat(document.getElementById('tracking-waist').value);
+
+            if (!date || !weight) {
+                alert('⚠️ Inserisci almeno data e peso!');
+                return;
+            }
+
+            appData.tracking.weigh_ins.push({ date, weight });
+            if (waist) {
+                appData.tracking.waist_measurements.push({ date, waist });
+            }
+
+            saveData();
+            renderTrackingHistory();
+            document.getElementById('tracking-weight').value = '';
+            document.getElementById('tracking-waist').value = '';
+            alert('✅ Misurazione aggiunta!');
+        }
+
+        function renderTrackingHistory() {
+            let html = '';
+
+            if (appData.tracking.weigh_ins.length === 0) {
+                html = '<p style="color: #666; text-align: center;">Nessuna misurazione registrata</p>';
+            } else {
+                const sorted = [...appData.tracking.weigh_ins].sort((a, b) => new Date(b.date) - new Date(a.date));
+                sorted.forEach(entry => {
+                    const waistEntry = appData.tracking.waist_measurements.find(w => w.date === entry.date);
+                    html += `
+                        <div class="tracking-entry">
+                            <div class="tracking-date">${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+                            <div>Peso: <strong>${entry.weight} kg</strong></div>
+                            ${waistEntry ? `<div>Girovita: <strong>${waistEntry.waist} cm</strong></div>` : ''}
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('tracking-history').innerHTML = html;
+        }
+
+        // Backup functions
+        function exportJSON() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `fitness-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportExcel() {
+            let csv = 'Data,Tipo,Peso (kg),Girovita (cm)\n';
+
+            appData.tracking.weigh_ins.forEach(entry => {
+                const waistEntry = appData.tracking.waist_measurements.find(w => w.date === entry.date);
+                csv += `${entry.date},Peso,${entry.weight},${waistEntry ? waistEntry.waist : ''}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `fitness-tracker-tracking-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    if (file.name.endsWith('.json')) {
+                        const imported = JSON.parse(e.target.result);
+                        if (confirm('⚠️ Questo sovrascriverà tutti i dati attuali. Continuare?')) {
+                            appData = imported;
+                            saveData();
+                            init();
+                            alert('✅ Backup importato con successo!');
+                        }
+                    } else if (file.name.endsWith('.csv')) {
+                        const lines = e.target.result.split('\n');
+                        let importedCount = 0;
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (!line) continue;
+                            const [date, type, weight, waist] = line.split(',');
+                            if (type === 'Peso' && weight) {
+                                appData.tracking.weigh_ins.push({ date, weight: parseFloat(weight) });
+                                importedCount++;
+                            }
+                            if (waist) {
+                                appData.tracking.waist_measurements.push({ date, waist: parseFloat(waist) });
+                            }
+                        }
+                        saveData();
+                        renderTrackingHistory();
+                        alert(`✅ Importati ${importedCount} pesi dal file CSV!`);
+                    }
+                } catch (error) {
+                    alert('❌ Errore durante l\'importazione: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ SEI SICURO? Questo cancellerà TUTTI i dati in modo permanente!')) {
+                localStorage.removeItem('fitnessTrackerData');
+                appData = JSON.parse(JSON.stringify(defaultData));
+                init();
+                alert('✅ Tutti i dati sono stati cancellati e ripristinati ai valori predefiniti.');
+            }
+        }
+
+        // Utility functions
+        function saveData() {
+            localStorage.setItem('fitnessTrackerData', JSON.stringify(appData));
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.add('hidden');
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
