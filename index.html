@@ -323,7 +323,7 @@
       font-size: 14px;
       font-weight: 750;
     }
-
+    
     input,
     select,
     textarea {
@@ -336,6 +336,14 @@
       color: var(--text);
       font-size: 16px;
     }
+    
+/* Fix larghezza input data su Safari iOS */
+input[type="date"] {
+  min-width: 0;
+  max-width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
 
     textarea {
       min-height: 88px;
